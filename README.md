@@ -16,7 +16,7 @@
   </filter-mapping>
 ```
 
-##主要用来控制的参数配置:
+##可修改hystrix-config.properties文件控制，主要用来控制的参数配置:
 - 主要有下面5种类型的属性配置：
 - execution配置
 - 该配置前缀为 hystrix.command.default
