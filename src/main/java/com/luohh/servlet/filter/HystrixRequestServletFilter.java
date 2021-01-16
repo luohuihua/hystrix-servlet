@@ -58,11 +58,11 @@ public class HystrixRequestServletFilter implements Filter {
             initEnd = true;
         }
         String requestUrl = ((HttpServletRequest) servletRequest).getRequestURI();
-        String queryString = ((HttpServletRequest) servletRequest).getQueryString();
         StringBuffer key = new StringBuffer(requestUrl);
-        if (queryString != null && queryString.length() > 0) {
-            key.append("?").append(queryString);
-        }
+//        String queryString = ((HttpServletRequest) servletRequest).getQueryString();
+//        if (queryString != null && queryString.length() > 0) {
+//            key.append("?").append(queryString);
+//        }
         //配置参数
         HystrixCommand.Setter setter = HystrixCommand.Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("ServletRequestGroup"))
                 .andCommandKey(HystrixCommandKey.Factory.asKey("HystrixCommand-" + key.toString()))
