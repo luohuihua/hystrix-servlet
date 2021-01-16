@@ -60,7 +60,7 @@ public class HystrixRequestStatisticsServlet extends HttpServlet {
                 HealthCountsStream healthCountsStream = hystrixCommandMetrics.getHealthCountsStream();
                 HystrixCommand.Setter setter = HystrixCommand.Setter.withGroupKey(hystrixCommandMetrics.getCommandGroup()).andCommandKey(hystrixCommandMetrics.getCommandKey()).andThreadPoolKey(hystrixCommandMetrics.getThreadPoolKey());
                 ServletHystrixCommand myHystrixCommand = new ServletHystrixCommand(setter);
-                out.println("{path:'" + hystrixCommandMetrics.getCommandKey().toString().replace("HystrixCommand-", "") + "'" +
+                out.println("{path:'" + hystrixCommandMetrics.getCommandKey().toString().replace("HystrixCommand-", "").replace("'", "").replace("\"", "") + "'" +
                         ",fusing:'" + (myHystrixCommand.isCircuitBreakerOpen() ? "是" : "否") + "'" +
                         ",failureStatistics:'" + healthCountsStream.getLatest().toString().replace("HealthCounts", "") + "'" +
                         ",averageRequestExecutionTime:'" + hystrixCommandMetrics.getTotalTimeMean() + "'},");
