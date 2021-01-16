@@ -1,9 +1,13 @@
 package com.luohh.servlet.filter;
 
 import com.luohh.hystrix.ServletHystrixCommand;
+import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
+import com.netflix.hystrix.HystrixCommandKey;
+import com.netflix.hystrix.HystrixThreadPoolKey;
 
 import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -53,10 +57,17 @@ public class HystrixRequestServletFilter implements Filter {
             System.setProperties(prop);
             initEnd = true;
         }
-        ServletHystrixCommand myHystrixCommand = new ServletHystrixCommand(HystrixCommandGroupKey.Factory.asKey("HystrixGroup"));
-        myHystrixCommand.setServletRequest(servletRequest);
-        myHystrixCommand.setServletResponse(servletResponse);
-        myHystrixCommand.setFilterChain(filterChain);
+        String requestUrl = ((HttpServletRequest) servletRequest).getRequestURI();
+        String queryString = ((HttpServletRequest) servletRequest).getQueryString();
+        StringBuffer key = new StringBuffer(requestUrl);
+        if (queryString != null && queryString.length() > 0) {
+            key.append("?").append(queryString);
+        }
+        //配置参数
+        HystrixCommand.Setter setter = HystrixCommand.Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("ServletRequestGroup"))
+                .andCommandKey(HystrixCommandKey.Factory.asKey("HystrixCommand-" + key.toString()))
+                .andThreadPoolKey(HystrixThreadPoolKey.Factory.asKey("HystrixThreadPool-" + key.toString()));
+        ServletHystrixCommand myHystrixCommand = new ServletHystrixCommand(servletRequest, servletResponse, filterChain, setter);
         //同步执行
         String message = myHystrixCommand.execute();
         if (message != null && message.length() > 0) {

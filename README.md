@@ -1,6 +1,6 @@
 # 熔断器Servlet版本
 ## 简介
-- 在某些情况下老框架环境下也需要使用熔断器，当遇到这种情况，这些代码应该可以帮助到你
+- 网上大部分熔断的都是针对SpringBoot，SpringCloud环境下使用熔断器，当遇到非这种环境也需要使用熔断的情况，这些代码应该可以帮助到你
 - 主要基于[Netflix/Hystrix](https://github.com/Netflix/Hystrix) 进行控制
 
 ##将以下过滤器内容添加到web.xml进行熔断的控制

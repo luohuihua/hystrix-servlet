@@ -1,8 +1,6 @@
 package com.luohh.hystrix;
 
 import com.netflix.hystrix.HystrixCommand;
-import com.netflix.hystrix.HystrixCommandGroupKey;
-import com.netflix.hystrix.HystrixThreadPoolKey;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletRequest;
@@ -28,26 +26,16 @@ public class ServletHystrixCommand extends HystrixCommand<String> {
     /**
      * 构造方法
      *
-     * @param group
+     * @param servletRequest
+     * @param servletResponse
+     * @param filterChain
+     * @param setter
      */
-    public ServletHystrixCommand(HystrixCommandGroupKey group) {
-        super(group);
-    }
-
-    public ServletHystrixCommand(HystrixCommandGroupKey group, HystrixThreadPoolKey threadPool) {
-        super(group, threadPool);
-    }
-
-    public ServletHystrixCommand(HystrixCommandGroupKey group, int executionIsolationThreadTimeoutInMilliseconds) {
-        super(group, executionIsolationThreadTimeoutInMilliseconds);
-    }
-
-    public ServletHystrixCommand(HystrixCommandGroupKey group, HystrixThreadPoolKey threadPool, int executionIsolationThreadTimeoutInMilliseconds) {
-        super(group, threadPool, executionIsolationThreadTimeoutInMilliseconds);
-    }
-
-    public ServletHystrixCommand(Setter setter) {
+    public ServletHystrixCommand(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain, HystrixCommand.Setter setter) {
         super(setter);
+        setServletRequest(servletRequest);
+        setServletResponse(servletResponse);
+        setFilterChain(filterChain);
     }
 
     /**
