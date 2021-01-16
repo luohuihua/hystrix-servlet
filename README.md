@@ -5,26 +5,26 @@
 
 ##将以下过滤器内容添加到web.xml进行熔断的控制
 ```lua
-  <filter>
+<filter>
     <display-name>HystrixRequestServletFilter</display-name>
-    <filter-name>HystrixRequestServletFilter</filter-name>
+        <filter-name>HystrixRequestServletFilter</filter-name>
     <filter-class>com.luohh.servlet.filter.HystrixRequestServletFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>HystrixRequestServletFilter</filter-name>
+</filter>
+    <filter-mapping>
+        <filter-name>HystrixRequestServletFilter</filter-name>
     <url-pattern>/*</url-pattern>
-  </filter-mapping>
+</filter-mapping>
 ```
 ##将以下过滤器内容添加到web.xml进行查看熔断统计，访问路径:http://localhost:port/项目路径/hystrix-statistics
 ```lua
-  <servlet>
-	<servlet-name>HystrixRequestStatisticsServlet</servlet-name>
-		<servlet-class>com.luohh.servlet.HystrixRequestStatisticsServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>HystrixRequestStatisticsServlet</servlet-name>
-	<url-pattern>/hystrix-statistics</url-pattern>
-  </servlet-mapping>
+<servlet>
+    <servlet-name>HystrixRequestStatisticsServlet</servlet-name>
+        <servlet-class>com.luohh.servlet.HystrixRequestStatisticsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HystrixRequestStatisticsServlet</servlet-name>
+    <url-pattern>/hystrix-statistics</url-pattern>
+</servlet-mapping>
 ```
 ##可修改hystrix-config.properties文件控制，主要用来控制的参数配置:
 - 主要有下面5种类型的属性配置：
