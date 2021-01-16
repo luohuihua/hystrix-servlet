@@ -26,6 +26,15 @@ public class ServletHystrixCommand extends HystrixCommand<String> {
     /**
      * 构造方法
      *
+     * @param setter
+     */
+    public ServletHystrixCommand(HystrixCommand.Setter setter) {
+        super(setter);
+    }
+
+    /**
+     * 构造方法
+     *
      * @param servletRequest
      * @param servletResponse
      * @param filterChain

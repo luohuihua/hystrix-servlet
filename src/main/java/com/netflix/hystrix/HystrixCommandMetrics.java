@@ -343,7 +343,7 @@ public class HystrixCommandMetrics extends HystrixMetrics {
         }
     }
 
-    /* package-private */ HealthCountsStream getHealthCountsStream() {
+    public HealthCountsStream getHealthCountsStream() {
         return healthCountsStream;
     }
 

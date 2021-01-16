@@ -15,6 +15,7 @@
             <artifactId>archaius-core</artifactId>
             <version>0.1.4</version>
         </dependency>
+
         <dependency>
             <groupId>io.reactivex</groupId>
             <artifactId>rxjava</artifactId>

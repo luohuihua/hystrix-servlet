@@ -1,10 +1,7 @@
 package com.luohh.servlet.filter;
 
 import com.luohh.hystrix.ServletHystrixCommand;
-import com.netflix.hystrix.HystrixCommand;
-import com.netflix.hystrix.HystrixCommandGroupKey;
-import com.netflix.hystrix.HystrixCommandKey;
-import com.netflix.hystrix.HystrixThreadPoolKey;
+import com.netflix.hystrix.*;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -63,10 +60,12 @@ public class HystrixRequestServletFilter implements Filter {
 //        if (queryString != null && queryString.length() > 0) {
 //            key.append("?").append(queryString);
 //        }
-        //配置参数
-        HystrixCommand.Setter setter = HystrixCommand.Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("ServletRequestGroup"))
-                .andCommandKey(HystrixCommandKey.Factory.asKey("HystrixCommand-" + key.toString()))
-                .andThreadPoolKey(HystrixThreadPoolKey.Factory.asKey("HystrixThreadPool-" + key.toString()));
+        HystrixCommandGroupKey commandGroupKey = HystrixCommandGroupKey.Factory.asKey("ServletRequestGroup");
+        HystrixCommandKey commandKey = HystrixCommandKey.Factory.asKey("HystrixCommand-" + key.toString());
+        HystrixThreadPoolKey threadPoolKey = HystrixThreadPoolKey.Factory.asKey("HystrixThreadPool-" + key.toString());
+
+        //设置参数
+        HystrixCommand.Setter setter = HystrixCommand.Setter.withGroupKey(commandGroupKey).andCommandKey(commandKey).andThreadPoolKey(threadPoolKey);
         ServletHystrixCommand myHystrixCommand = new ServletHystrixCommand(servletRequest, servletResponse, filterChain, setter);
         //同步执行
         String message = myHystrixCommand.execute();
