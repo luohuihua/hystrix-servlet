@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -51,7 +52,12 @@ public class HystrixRequestServletFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         if (!initEnd) {
-            System.setProperties(prop);
+            for (Map.Entry<Object, Object> entry : prop.entrySet()) {
+                if (entry.getKey() != null && entry.getValue() != null) {
+                    System.setProperty(entry.getKey().toString(), entry.getValue().toString());
+                }
+            }
+//            System.setProperties(prop);
             initEnd = true;
         }
         String requestUrl = ((HttpServletRequest) servletRequest).getRequestURI();
